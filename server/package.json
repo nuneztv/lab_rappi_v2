@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
+    "vercel-build": "tsc --noEmit",
     "start": "node dist/app.js"
   },
   "dependencies": {
