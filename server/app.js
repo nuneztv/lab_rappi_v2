@@ -44186,12 +44186,12 @@ var require_main3 = __commonJS({
   }
 });
 
-// src/app.ts
-var app_exports = {};
-__export(app_exports, {
-  default: () => app_default
+// src/main.ts
+var main_exports = {};
+__export(main_exports, {
+  default: () => main_default
 });
-module.exports = __toCommonJS(app_exports);
+module.exports = __toCommonJS(main_exports);
 var import_express5 = __toESM(require_express2());
 var import_cors = __toESM(require_lib3());
 var import_dotenv2 = __toESM(require_dist5());
@@ -54703,7 +54703,7 @@ router4.post("/orders/:id/release", async (req, res) => {
 });
 var delivery_routes_default = router4;
 
-// src/app.ts
+// src/main.ts
 import_dotenv2.default.config();
 var app = (0, import_express5.default)();
 app.use(
@@ -54730,7 +54730,7 @@ if (!process.env.VERCEL) {
   const port = Number(process.env.PORT || 4e3);
   app.listen(port, () => console.log(`Server running on port ${port}`));
 }
-var app_default = app;
+var main_default = app;
 /*! Bundled license information:
 
 depd/index.js:

@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "build": "tsc",
-    "bundle": "npx -y esbuild@0.25.10 src/app.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --outfile=app.js",
+    "bundle": "npx -y esbuild@0.25.10 src/main.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --outfile=app.js",
     "vercel-build": "echo using prebuilt app.js",
-    "start": "node dist/app.js"
+    "start": "node dist/main.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
