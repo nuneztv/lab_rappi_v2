@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
-    "vercel-build": "tsc --noEmit",
+    "bundle": "npx -y esbuild@0.25.10 src/app.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --outfile=app.js",
+    "vercel-build": "echo using prebuilt app.js",
     "start": "node dist/app.js"
   },
   "dependencies": {
