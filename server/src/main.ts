@@ -44216,7 +44216,15 @@ var import_dotenv = __toESM(require_dist5());
 import_dotenv.default.config();
 var pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
+  // En Vercel cada instancia de la función tiene su propio pool:
+  // pocas conexiones por instancia para no agotar el límite de Supabase.
+  max: process.env.VERCEL ? 3 : 10,
+  idleTimeoutMillis: 1e4,
+  connectionTimeoutMillis: 1e4
+});
+pool.on("error", (err) => {
+  console.error("pg pool error:", err.message);
 });
 var connection_default = pool;
 
@@ -52478,21 +52486,30 @@ async function verifyToken(req, res, next) {
   if (!header.startsWith("Bearer ")) {
     return res.status(401).json({ message: "No hay token" });
   }
+  const token = header.split(" ")[1];
+  let authId;
   try {
-    const token = header.split(" ")[1];
     const { data, error } = await getAuth().auth.getUser(token);
     if (error || !data.user) {
+      console.error("verifyToken: Supabase rechaz\xF3 el token:", error?.message);
       return res.status(401).json({ message: "Token invalido o vencido" });
     }
-    const result = await connection_default.query("SELECT id, role FROM users WHERE auth_id = $1", [data.user.id]);
+    authId = data.user.id;
+  } catch (err) {
+    console.error("verifyToken: error al contactar Supabase Auth:", err);
+    return res.status(503).json({ message: "No se pudo verificar la sesion, intenta de nuevo" });
+  }
+  try {
+    const result = await connection_default.query("SELECT id, role FROM users WHERE auth_id = $1", [authId]);
     if (result.rows.length === 0) {
       return res.status(401).json({ message: "Usuario no encontrado" });
     }
     req.user = result.rows[0];
-    next();
   } catch (err) {
-    return res.status(401).json({ message: "Token invalido o vencido" });
+    console.error("verifyToken: error de base de datos:", err);
+    return res.status(500).json({ message: "Error de base de datos al verificar la sesion" });
   }
+  next();
 }
 function onlyRole(role) {
   return (req, res, next) => {
