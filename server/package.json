@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/api.ts",
     "build": "tsc",
-    "bundle": "npx -y esbuild@0.25.10 src/api.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --outfile=src/rappi-bundle.js",
+    "bundle": "npx -y esbuild@0.25.10 src/api.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --banner:js=//@ts-nocheck --outfile=src/main.ts",
     "start": "node dist/main.js"
   },
   "dependencies": {
