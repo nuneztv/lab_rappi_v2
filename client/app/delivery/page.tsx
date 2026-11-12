@@ -159,6 +159,7 @@ function DeliveryPage() {
 
   async function accept(o: Order) {
     setError("");
+    setMsg("");
     setBusy(true);
     try {
       const start = startOf(o);
