@@ -1,6 +1,8 @@
+// 
+// 
+// @ts-ignore
+import bundle from "./rappi-bundle.js";
 
-import type {} from "express";
-
-const app = require("./rappi-bundle.js").default;
+const app = bundle;
 
 export default app;
