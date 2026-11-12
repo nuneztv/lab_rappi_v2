@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/api.ts",
     "build": "tsc",
-    "bundle": "npx -y esbuild@0.25.10 src/main.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --outfile=app.js",
+    "bundle": "npx -y esbuild@0.25.10 src/api.ts --bundle --platform=node --target=node20 --format=cjs --external:pg-native --outfile=src/rappi-bundle.js",
     "start": "node dist/main.js"
   },
   "dependencies": {
