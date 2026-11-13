@@ -11,7 +11,13 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5173", "https://labrappiv2.vercel.app", "https://labrappiv2-nine.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "https://labrappiv2.vercel.app",
+      "https://labrappiv2-nine.vercel.app",
+      ...(process.env.CLIENT_URL ? process.env.CLIENT_URL.split(",") : []),
+    ],
   }),
 );
 app.use(express.json());
