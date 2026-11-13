@@ -16,7 +16,10 @@ app.use(
       "http://localhost:5173",
       "https://labrappiv2.vercel.app",
       "https://labrappiv2-nine.vercel.app",
-      ...(process.env.CLIENT_URL ? process.env.CLIENT_URL.split(",") : []),
+      "https://lab-rappi-v2.vercel.app",
+      ...(process.env.CLIENT_URL
+        ? process.env.CLIENT_URL.split(",").map((u) => u.trim().replace(/\/+$/, ""))
+        : []),
     ],
   }),
 );
